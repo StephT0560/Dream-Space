@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>Dream Space</title>
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/skeleton.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+  </head>
+  <body>
+    {% with messages=get_flashed_messages() %}
+    {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+          <div class="message">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="container">
+      <div class="row">
+        <div class="u-full-width">
+          <nav class="menu">
+            <!-- menu goes here -->
+              {% if current_user.is_authenticated %}
+                <a href="{{ url_for('index') }}" title=" Feed ">Feed</a>
+                <a href = "{{ url_for('post')}}" class = "New"> Create New Post</a>
+                <a href = "{{ url_for('stream', username=current_user.username) }}"> Profile </a>
+                <a href="{{ url_for('logout') }}" title="Log Out">Logout</a>
+              {% else %}
+                <a href="{{ url_for('login') }}" title ="Log in">Login</a>
+                <a href="{{ url_for('register') }}" title="Sign Up">Sign Up</a>
+              {% endif %}
+          </nav>
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+      <footer>
+        <p>Made by Stephen <a href=#> Vist my site</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
