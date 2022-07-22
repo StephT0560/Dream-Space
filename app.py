@@ -18,7 +18,7 @@ HOST = "0.0.0.0"
 
 app = Flask(__name__)
 # import secerts and run secrets.token_hex(16) in terminal
-app.config["SECRET_KEY"] = "f8f9c3253a3995f26c7586d36f2ca02d"
+app.config["SECRET_KEY"] = "get your own"
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -54,7 +54,7 @@ def register():
     if form.validate_on_submit():
         flash("Yay, you registered!", "success")
         models.User.create_user(username=form.username.data,email=form.email.data, password=form.password.data)
-        return redirect(url_for("index"))
+        return redirect(url_for("login"))
     return render_template("register.html", form=form)
 
 
