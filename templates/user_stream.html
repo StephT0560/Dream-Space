@@ -18,11 +18,9 @@
         <h5>Following</h5>
         <p> {{user.following().count()}} </p>
     </td>
-    </tr>
-</table>
-<div class = "grid-25">
-    <!-- Follow/unfollow -->
-    {% if current_user.is_authenticated%}
+    <td>
+        <!-- Follow/unfollow -->
+        {% if current_user.is_authenticated%}
         {% if user != current_user %}
             {% if not user in current_user.following()%}
                 <a href ="{{url_for('follow',username=user.username) }}" class="small">Follow</a>
@@ -31,7 +29,8 @@
             {% endif %}        
         {% endif %}
     {% endif %}
-</div>
-
+    </td>
+    </tr>
+</table>
 {{super()}}
 {% endblock %}

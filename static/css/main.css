@@ -1,0 +1,30 @@
+
+  float: left;
+  width: 33%;
+}
+.grid-25{
+  display: inline-block;
+  float: left;
+  width: 20%;
+  margin: 0 2.25%;
+}
+
+/*Media Queries*/
+@media (max-width: 728px) {
+  .main {
+    margin: 10px auto;
+  }
+  .grid-25 {
+    width: 46%;
+    margin: 20px 2%;
+  }
+  .grid-50 {
+    width: 100%;
+  }
+  .row {
+    padding: 0 10px;
+}
+
+.post {
+    white-space: pre;
+

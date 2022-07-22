@@ -1,59 +1,11 @@
-<!DOCTYPE html>
-<html>
-<style>
-body, html {
-  height: 100%;
-  margin: 0;
-}
+{% extends "layout.html" %}
 
-.bgimg {
-  background-image: url('/w3images/forestbridge.jpg');
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  color: white;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 25px;
-}
+{% block content %}
 
-.topleft {
-  position: absolute;
-  top: 0;
-  left: 16px;
-}
+<h1 class="w3-margin w3-jumbo w3-center">404</h1>
 
-.bottomleft {
-  position: absolute;
-  bottom: 0;
-  left: 16px;
-}
+<p class="w3-xlarge w3-center">Wow, sorry, that page doesn't exist.</p>
 
-.middle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+<p class="w3-xlarge w3-center"><a href="{{ url_for('home') }}">Try again</a></p>
 
-hr {
-  margin: auto;
-  width: 40%;
-}
-</style>
-<body>
-
-<div class="bgimg">
-  <div class="topleft">
-    <p>Logo</p>
-  </div>
-  <div class="middle">
-    <h2>Sorry, that page doesn't exist</h2>
-    <hr>
-    <p id="demo" style="font-size:30px"><a href="{{ url_for('index') }}">Go back</a></p>
-  </div>
-  <div class="bottomleft">
-    <p>Some text</p>
-  </div>
-</div>
+{% endblock %}

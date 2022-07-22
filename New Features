@@ -1,5 +1,6 @@
 -Allow users to upload an avatar
+-Recommended books under post
+-Allows users to comment 
 -Allow users to delete their account
 -Add a method for blocking users so you don't see their posts
--Add a method for notifying useers if they're mentioned in a post
 -Add a new level to your users, groups. Users belong to a group and you subscribe to a group's updates instead single users 

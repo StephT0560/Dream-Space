@@ -1,5 +1,6 @@
+import recs
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, BooleanField, TextField
+from wtforms import StringField, PasswordField, BooleanField, TextField, TextAreaField
 from wtforms.validators import (
     DataRequired,
     ValidationError,
@@ -53,4 +54,7 @@ class LoginForm(Form):
 
 
 class PostForm(Form):
-    content = StringField("What's up?", validators=[DataRequired()])
+
+    book = TextField("Book Name", validators = [DataRequired()])
+    content = TextAreaField("Message", validators=[DataRequired()])    
+    

@@ -1,3 +1,4 @@
+from recs import book_recs
 import models
 import forms
 from flask import Flask, g, render_template, flash, redirect, url_for, abort
@@ -10,6 +11,9 @@ from flask_login import (
     login_required,
     current_user,
 )
+
+DEBUG = True
+HOST = "0.0.0.0"
 
 
 app = Flask(__name__)
@@ -88,12 +92,21 @@ def home():
 @app.route("/index")
 def index():
     stream = models.Post.select().limit(100)
+    for post in stream:
+        books = book_recs(post.book)
+        for i in range(len(books)-1):
+            if len(books[i]) > 50:
+                remove = books.pop(i)
+        post.recommendations = books
+
     return render_template("stream.html", stream=stream)
 
 
 @app.route("/stream")
 @app.route("/stream/<username>")
+@login_required
 def stream(username=None):
+
     template = "stream.html"
     if username and username != current_user.username:
         try:
@@ -101,20 +114,21 @@ def stream(username=None):
         except models.DoesNotExist:
             abort(404)
         else:
-            stream = user.post.limit(100)
+            stream = user.get_post().limit(100)
     else:
         stream = current_user.get_stream().limit(100)
         user = current_user
     if username:
         template = "user_stream.html"
-    return render_template(template, stream=stream, user=user)
+    return render_template(template, stream = stream, user = user)
 
-@app.route('/post/<int:post_id')
+
+@app.route('/post/<int:post_id>')
 def view_post(post_id):
     posts = models.Post.select().where(models.Post.id == post_id)
-    if(posts.count() == 0):
+    if posts.count() == 0:
         abort(404)
-    return render_template('stream.html',stream=posts)
+    return render_template('stream.html', stream=posts)
 
 
 
@@ -155,9 +169,11 @@ def unfollow(username):
             flash("You've unfollowed {}!".format(to_user.username), "success")
     return redirect(url_for("stream", username=to_user.username))
 
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'),404
+
 
 @app.route("/new_post", methods=("GET", "POST"))
 @login_required
@@ -165,7 +181,7 @@ def post():
     form = forms.PostForm()
     if form.validate_on_submit():
         models.Post.create(
-            user=g.user._get_current_object(), content=form.content.data.strip()
+            user=g.user._get_current_object(), content=form.content.data.strip(), book = form.book.data.strip()
         )
         flash("Message posted! Thanks!", "success")
         return redirect(url_for("index"))
@@ -184,4 +200,4 @@ if __name__ == "__main__":
     except ValueError:
         pass
 
-    app.run("0.0.0.0", debug=True)
+    app.run(host = HOST, debug=DEBUG)

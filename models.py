@@ -1,5 +1,4 @@
 import datetime
-
 from flask_bcrypt import generate_password_hash
 from flask_login import UserMixin
 from peewee import *
@@ -53,12 +52,15 @@ class User(UserMixin, Model):
 
 
 class Post(Model):
-    timestamp = DateTimeField(default=datetime.datetime.now)
-    user = ForeignKeyField(rel_model=User, related_name="posts", model="posts")
-
-    class Meta:
-        database = DATABASE
-        order_by = ("-timestamp",)
+   timestamp = DateTimeField(default=datetime.datetime.now)
+   user = ForeignKeyField(model=User, related_name='posts')
+   
+   content = TextField()
+   book = TextField()
+   
+   class Meta:
+       database = DATABASE
+       order_by = ('-timestamp',)
 
 
 class Relationship(Model):
